@@ -48,7 +48,6 @@ export default function AdminPanel() {
     window.__ADMIN_OVERRIDES.hosts = window.__ADMIN_OVERRIDES.hosts || localHosts;
     window.__ADMIN_OVERRIDES.globals = window.__ADMIN_OVERRIDES.globals || {};
     setOverrides(window.__ADMIN_OVERRIDES);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Sync localHosts and localWidget into window overrides whenever they change
@@ -60,7 +59,6 @@ export default function AdminPanel() {
     };
     window.__ADMIN_OVERRIDES = next;
     setOverrides(next);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localHosts, localWidget]);
 
   /* ---------------- Host editing helpers ---------------- */
