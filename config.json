@@ -1,0 +1,299 @@
+{
+  "ASSET_BASE_URL": "https://jeepmeta.github.io/789-schedule-assets",
+  "BACKGROUND_IMAGE": "https://jeepmeta.github.io/789-schedule-assets/backgrounds/background.png",
+  "FLAMES": {
+    "bic": {
+      "primary": "https://jeepmeta.github.io/789-schedule-assets/flames/bic-flame.webm"
+    },
+    "zippo": {
+      "primary": "https://jeepmeta.github.io/789-schedule-assets/flames/zippo-flame.webm"
+    }
+  },
+  "TIMEZONE": "America/New_York",
+  "WIDGET": {
+    "tileSizePx": 160,
+    "tileGapPx": 12,
+    "showSummaryOnHover": true,
+    "liveEffect": {
+      "videoEnabled": true,
+      "opacity": 0.95,
+      "blendMode": "screen"
+    },
+    "flamePlacement": {
+      "x": "50%",
+      "y": "60%",
+      "scale": 1
+    },
+    "updateIntervalMs": 30000,
+    "theme": {
+      "primary": "#ffd400",
+      "background": "#000000",
+      "accent": "#ffd400"
+    }
+  },
+  "HOSTS": [
+    {
+      "id": "grami",
+      "name": "Grami",
+      "xHandle": "@gramixmeta",
+      "xUrl": "https://x.com/gramixmeta",
+      "type": "bic",
+      "row": "day",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Grami.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Grami-summary.png",
+      "schedule": [
+        {
+          "start": "06:00",
+          "end": "07:00"
+        }
+      ]
+    },
+    {
+      "id": "leah",
+      "name": "Leah",
+      "xHandle": "@leahbluewater",
+      "xUrl": "https://x.com/leahbluewater",
+      "type": "bic",
+      "row": "day",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Leah.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Leah-summary.png",
+      "schedule": [
+        {
+          "start": "06:00",
+          "end": "07:00"
+        }
+      ]
+    },
+    {
+      "id": "shibo",
+      "name": "Shibo",
+      "xHandle": "@godsburnt",
+      "xUrl": "https://x.com/godsburnt",
+      "type": "bic",
+      "row": "day",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Shibo.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Shibo-summary.png",
+      "schedule": [
+        {
+          "start": "10:00",
+          "end": "12:00"
+        }
+      ]
+    },
+    {
+      "id": "paws",
+      "name": "Paws",
+      "xHandle": "@pawsmeta",
+      "xUrl": "https://x.com/pawsmeta",
+      "type": "bic",
+      "row": "day",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Paws.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Paws-summary.png",
+      "schedule": [
+        {
+          "start": "13:00",
+          "end": "15:00"
+        }
+      ]
+    },
+    {
+      "id": "shield",
+      "name": "Shield",
+      "xHandle": "@shieldmetax",
+      "xUrl": "https://x.com/shieldmetax",
+      "type": "bic",
+      "row": "day",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Shield.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Shield-summary.png",
+      "schedule": [
+        {
+          "start": "14:00",
+          "end": "15:00"
+        }
+      ]
+    },
+    {
+      "id": "anthem",
+      "name": "Anthem",
+      "xHandle": "@anthemhayek",
+      "xUrl": "https://x.com/anthemhayek",
+      "type": "bic",
+      "row": "day",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Anthem.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Anthem-summary.png",
+      "schedule": [
+        {
+          "start": "15:00",
+          "end": "16:00"
+        }
+      ]
+    },
+    {
+      "id": "bark",
+      "name": "Bark",
+      "xHandle": "@barkmeta",
+      "xUrl": "https://x.com/barkmeta",
+      "type": "bic",
+      "row": "day",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Bark.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Bark-summary.png",
+      "schedule": [
+        {
+          "start": "17:00",
+          "end": "19:00"
+        }
+      ]
+    },
+    {
+      "id": "vibes",
+      "name": "Vibes",
+      "xHandle": "@vibesmetax",
+      "xUrl": "https://x.com/vibesmetax",
+      "type": "zippo",
+      "row": "zippo",
+      "zippoClosed": "https://jeepmeta.github.io/789-schedule-assets/zippos/Vibes-closed.png",
+      "zippoOpen": "https://jeepmeta.github.io/789-schedule-assets/zippos/Vibes-open.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Vibes-summary.png",
+      "schedule": [
+        {
+          "start": "19:00",
+          "end": "20:00"
+        }
+      ]
+    },
+    {
+      "id": "wooki",
+      "name": "Wooki",
+      "xHandle": "@wookimeta",
+      "xUrl": "https://x.com/wookimeta",
+      "type": "zippo",
+      "row": "zippo",
+      "zippoClosed": "https://jeepmeta.github.io/789-schedule-assets/zippos/Wooki-closed.png",
+      "zippoOpen": "https://jeepmeta.github.io/789-schedule-assets/zippos/Wooki-open.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Wooki-summary.png",
+      "schedule": [
+        {
+          "start": "20:00",
+          "end": "21:00"
+        }
+      ]
+    },
+    {
+      "id": "gator",
+      "name": "Gator",
+      "xHandle": "@gatormetax",
+      "xUrl": "https://x.com/gatormetax",
+      "type": "zippo",
+      "row": "zippo",
+      "zippoClosed": "https://jeepmeta.github.io/789-schedule-assets/zippos/Gator-closed.png",
+      "zippoOpen": "https://jeepmeta.github.io/789-schedule-assets/zippos/Gator-open.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Gator-summary.png",
+      "schedule": [
+        {
+          "start": "21:00",
+          "end": "22:00"
+        }
+      ]
+    },
+    {
+      "id": "sauce",
+      "name": "Sauce",
+      "xHandle": "@crypto_sauce",
+      "xUrl": "https://x.com/crypto_sauce",
+      "type": "bic",
+      "row": "night",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Sauce.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Sauce-summary.png",
+      "schedule": [
+        {
+          "start": "22:00",
+          "end": "23:00"
+        }
+      ]
+    },
+    {
+      "id": "dream",
+      "name": "Dream",
+      "xHandle": "@dreammetax",
+      "xUrl": "https://x.com/dreammetax",
+      "type": "bic",
+      "row": "night",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Dream.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Dream-summary.png",
+      "schedule": [
+        {
+          "start": "23:00",
+          "end": "24:00"
+        },
+        {
+          "start": "00:00",
+          "end": "00:30"
+        }
+      ]
+    },
+    {
+      "id": "grow",
+      "name": "Grow",
+      "xHandle": "@growxmeta",
+      "xUrl": "https://x.com/growxmeta",
+      "type": "bic",
+      "row": "night",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Grow.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Grow-summary.png",
+      "schedule": [
+        {
+          "start": "00:00",
+          "end": "01:00"
+        }
+      ]
+    },
+    {
+      "id": "neuro",
+      "name": "Neuro",
+      "xHandle": "@neurometax",
+      "xUrl": "https://x.com/neurometax",
+      "type": "bic",
+      "row": "night",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Neuro.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Neuro-summary.png",
+      "schedule": [
+        {
+          "start": "01:00",
+          "end": "02:00"
+        }
+      ]
+    },
+    {
+      "id": "artsy",
+      "name": "Artsy",
+      "xHandle": "@artsymeta",
+      "xUrl": "https://x.com/artsymeta",
+      "type": "bic",
+      "row": "night",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Artsy.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Artsy-summary.png",
+      "schedule": [
+        {
+          "start": "02:00",
+          "end": "03:00"
+        }
+      ]
+    },
+    {
+      "id": "truck",
+      "name": "Truck",
+      "xHandle": "@truckmeta",
+      "xUrl": "https://x.com/truckmeta",
+      "type": "bic",
+      "row": "night",
+      "image": "https://jeepmeta.github.io/789-schedule-assets/bics/Truck.png",
+      "summaryImage": "https://jeepmeta.github.io/789-schedule-assets/summaries/Truck-summary.png",
+      "schedule": [
+        {
+          "start": "03:00",
+          "end": "04:00"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+:root {
+  --yellow: #ffd400;
+  --black: #000000;
+  --tile-size: 160px;
+  --tile-gap: 12px;
+}
+
+/* App layout */
+.app-root {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: var(--yellow);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 16px;
+  background: linear-gradient(90deg, rgba(0,0,0,0.9), rgba(0,0,0,0.6));
+  border-bottom: 1px solid rgba(255,212,0,0.08);
+}
+.brand { font-weight:700; color:var(--yellow); }
+.admin-toggle {
+  background:transparent;
+  color:var(--yellow);
+  border:1px solid rgba(255,212,0,0.12);
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+/* Main layout */
+.main {
+  display:flex;
+  gap:16px;
+  padding:16px;
+  align-items:flex-start;
+  justify-content:center;
+}
+
+/* Widget pane */
+.widget-pane {
+  flex: 1 1 720px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* Schedule root */
+.schedule-root {
+  display:flex;
+  flex-direction:column;
+  gap: 18px;
+  padding: 18px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.4));
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  width: min(1100px, 96%);
+  max-width: 1100px;
+}
+
+/* Rows */
+.row {
+  display:flex;
+  gap: var(--tile-gap);
+  align-items:center;
+  justify-content:flex-start;
+  flex-wrap:wrap;
+}
+
+/* Tile */
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: visible;
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms;
+  will-change: transform;
+  background: transparent;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.tile:hover { transform: translateY(-6px) scale(1.02); }
+.tile:focus { outline: none; box-shadow: 0 0 0 3px rgba(255,212,0,0.12); }
+
+/* Image container */
+.tile-image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.tile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display:block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Live video sits behind image */
+.live-video {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+/* Overlay and badge */
+.tile-overlay {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display:flex;
+  align-items:flex-start;
+  justify-content:flex-end;
+  padding:8px;
+  pointer-events: none;
+}
+.live-badge {
+  background: linear-gradient(90deg, rgba(255,212,0,0.95), rgba(255,212,0,0.85));
+  color: #000;
+  font-weight:700;
+  padding:4px 8px;
+  border-radius: 6px;
+  font-size:12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+}
+.modal {
+  background: rgba(10,10,10,0.95);
+  border: 1px solid rgba(255,212,0,0.06);
+  padding: 18px;
+  border-radius: 12px;
+  width: min(520px, 92%);
+  max-width: 520px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+  position: relative;
+}
+.modal-close {
+  position:absolute;
+  right:12px;
+  top:12px;
+  background:transparent;
+  color:var(--yellow);
+  border:0;
+  font-size:18px;
+  cursor:pointer;
+}
+.modal-body img {
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:8px;
+  margin-bottom:12px;
+}
+.cta {
+  display:inline-block;
+  background:var(--yellow);
+  color:#000;
+  padding:10px 14px;
+  border-radius:8px;
+  font-weight:700;
+  text-decoration:none;
+}
+
+/* Admin panel */
+.admin-pane {
+  width: 420px;
+  max-width: 42%;
+  background: linear-gradient(180deg, rgba(10,10,10,0.98), rgba(6,6,6,0.98));
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+.admin-root { padding: 12px; color: var(--yellow); }
+.studio-title { margin: 0 0 8px 0; color: var(--yellow); }
+.panel { margin-bottom: 12px; padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.02); }
+.control-row { display:flex; align-items:center; gap:8px; margin:8px 0; }
+.control-label { width: 120px; color: #ffd400; font-size:13px; }
+.control-field { flex:1; }
+.value { margin-left:8px; color:#ffd400; font-weight:700; }
+.btn { background: #ffd400; color:#000; padding:8px 10px; border-radius:8px; border:0; cursor:pointer; margin-right:8px; }
+.btn.file input { display:none; }
+
+/* Host cards */
+.host-card { border-radius:8px; padding:8px; background: rgba(0,0,0,0.2); margin-bottom:8px; }
+.host-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .main { flex-direction: column; align-items:stretch; }
+  .admin-pane { width: 100%; max-width: 100%; order: 2; }
+  .widget-pane { order: 1; }
+  .schedule-root { width: 100%; padding: 12px; }
+}

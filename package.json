@@ -1,0 +1,28 @@
+{
+  "name": "789-schedule-widget",
+  "version": "1.0.0",
+  "private": true,
+  "homepage": "https://jeepmeta.github.io/789-schedule-assets",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "lint": "eslint . --ext .js,.jsx"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^0.0.0",
+    "zustand": "^4.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.40.0",
+    "gh-pages": "^5.0.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
