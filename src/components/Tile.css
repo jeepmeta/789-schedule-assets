@@ -1,0 +1,88 @@
+/* Tile.css */
+
+.tile {
+  position: relative;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  width: var(--tile-size);
+  margin: var(--tile-gap);
+  color: #fff;
+  text-align: left;
+}
+
+.tile--live {
+  border-color: #ffb347;
+  box-shadow: 0 0 8px rgba(255,180,70,0.4);
+}
+
+.tile-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tile-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tile-pill {
+  background: #ff4747;
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tile-body {
+  position: relative;
+}
+
+.tile-flame-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  overflow: hidden;
+}
+
+.tile-flame-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:
+    translate(-50%, -50%)
+    translate(var(--flame-offset-x, 0), var(--flame-offset-y, 0))
+    scale(var(--flame-scale, 1));
+  filter:
+    saturate(var(--flame-saturation, 1))
+    brightness(var(--flame-brightness, 1));
+  opacity: var(--flame-opacity, 1);
+  width: auto;
+  height: 100%;
+}
+
+.tile-meta {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+}
+
+.tile-link {
+  color: #ffd966;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.tile-link:hover {
+  text-decoration: underline;
+}

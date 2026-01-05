@@ -1,88 +1,80 @@
 // src/components/Tile.jsx
-import React, { useRef, useEffect, useState } from 'react';
-import LiveEffect from './LiveEffect';
-import { WIDGET, FLAMES } from '../config';
+import React from 'react';
+import './Tile.css';
 
-/**
- * Tile
- * - Shows zippoClosed / zippoOpen for zippo hosts depending on isLive.
- * - Mounts LiveEffect video when showVideo is true.
- * - Reads per-host flamePlacement if present; otherwise LiveEffect will use global flame settings.
- */
 
-export default function Tile({ host, isLive, showVideo, onClick }) {
-  const imgRef = useRef(null);
-  const [visible, setVisible] = useState(false);
+export default function Tile({ host, isLive, showVideo, flameSettings, onClick }) {
+  const {
+    scale = 1,
+    offsetX = 0,
+    offsetY = 0,
+    saturation = 1,
+    brightness = 1,
+    opacity = 1
+  } = flameSettings || {};
 
-  useEffect(() => {
-    const el = imgRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
-        }
-      });
-    }, { rootMargin: '200px' });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  const imageSrc = (() => {
-    if (host.type === 'zippo') {
-      if (isLive && host.zippoOpen) return host.zippoOpen;
-      if (!isLive && host.zippoClosed) return host.zippoClosed;
-      return host.image;
-    }
-    return host.image;
-  })();
-
-  // flame video source: per-host override or FLAMES[type].primary
-  const flameSrc = (host.liveEffect && host.liveEffect.videoSource) || (FLAMES[host.type] && FLAMES[host.type].primary);
+  const flameStyle = {
+    '--flame-scale': scale,
+    '--flame-offset-x': `${offsetX}px`,
+    '--flame-offset-y': `${offsetY}px`,
+    '--flame-saturation': saturation,
+    '--flame-brightness': brightness,
+    '--flame-opacity': opacity
+  };
 
   return (
-    <div
-      className={`tile ${isLive ? 'live' : ''} ${host.type === 'zippo' ? 'zippo-tile' : ''}`}
-      role="button"
-      tabIndex={0}
+    <button
+      className={`tile ${isLive ? 'tile--live' : ''}`}
       onClick={onClick}
-      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
-      aria-pressed={isLive}
-      aria-label={`${host.name} ${isLive ? 'live' : ''}`}
-      style={{
-        // expose per-host flame placement as CSS variables for fine tuning (if present)
-        '--flame-x': host.flamePlacement?.x || undefined,
-        '--flame-y': host.flamePlacement?.y || undefined,
-        '--flame-scale': host.flamePlacement?.scale ?? undefined
-      }}
+      type="button"
     >
-      {isLive && showVideo && WIDGET.liveEffect.videoEnabled && flameSrc && (
-        <LiveEffect
-          videoSrc={flameSrc}
-          placement={host.flamePlacement || undefined}
-          styleOverrides={host.liveEffect || undefined}
-        />
-      )}
+      <div className="tile-inner">
+        <div className="tile-header">
+          <div className="tile-title">{host.displayName || host.id}</div>
+          {isLive && <div className="tile-pill">Live</div>}
+        </div>
 
-      <div className="tile-image" ref={imgRef}>
-        {visible ? (
-          <img
-            src={imageSrc}
-            alt={host.name}
-            loading="lazy"
-            draggable="false"
-            style={{ imageRendering: 'auto' }}
-          />
-        ) : (
-          <div className="placeholder" aria-hidden="true" />
-        )}
-      </div>
+        <div className="tile-body">
+          {showVideo && (
+            <div className="tile-flame-wrapper" style={flameStyle}>
+              {/* Replace with your actual video element / component */}
+              <video
+                className="tile-flame-video"
+                autoPlay
+                loop
+                muted
+                playsInline
+                src={host.flameSrc}
+              />
+            </div>
+          )}
 
-      <div className="tile-overlay" aria-hidden="true">
-        {isLive && <div className="live-badge">LIVE</div>}
-        {isLive && !showVideo && <div className="live-glow" aria-hidden="true" />}
+          <div className="tile-meta">
+            {host.social?.x && (
+              <a
+                href={host.social.x}
+                className="tile-link"
+                target="_blank"
+                rel="noreferrer"
+                onClick={e => e.stopPropagation()}
+              >
+                X
+              </a>
+            )}
+            {host.social?.website && (
+              <a
+                href={host.social.website}
+                className="tile-link"
+                target="_blank"
+                rel="noreferrer"
+                onClick={e => e.stopPropagation()}
+              >
+                Site
+              </a>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </button>
   );
 }

@@ -1,16 +1,10 @@
 // src/components/ScheduleWidget.jsx
 import React, { useEffect, useState, useMemo } from 'react';
 import { HOSTS as BASE_HOSTS, TIMEZONE, WIDGET, BACKGROUND_IMAGE } from '../config';
-import { nowMinutesInTZ, isNowInRange, hhmmToMinutes } from '../utils/time';
+import { nowMinutesInTZ, isNowInRange } from '../utils/time';
 import Tile from './Tile';
 import Modal from './Modal';
-
-/**
- * ScheduleWidget
- * - Computes live hosts based on schedule OR admin "forceLive" overrides.
- * - All live hosts will mount flame video (no priority).
- * - Reads admin overrides from window.__ADMIN_OVERRIDES (set by AdminPanel).
- */
+import { subscribeToOverrides } from '../lib/overrideBus';
 
 function mergeHostsWithOverrides(baseHosts, overridesHosts = []) {
   if (!Array.isArray(overridesHosts) || overridesHosts.length === 0) return baseHosts;
@@ -28,20 +22,34 @@ export default function ScheduleWidget() {
   const [nowMin, setNowMin] = useState(() => nowMinutesInTZ(TIMEZONE));
   const [liveIds, setLiveIds] = useState([]);
   const [modalHost, setModalHost] = useState(null);
+  const [overrides, setOverrides] = useState(() =>
+    typeof window !== 'undefined' ? window.__ADMIN_OVERRIDES || {} : {}
+  );
 
-  // read overrides from global window object (AdminPanel writes here)
-  const adminOverrides = typeof window !== 'undefined' ? window.__ADMIN_OVERRIDES || {} : {};
-  const mergedHosts = useMemo(() => mergeHostsWithOverrides(BASE_HOSTS, adminOverrides.hosts), [adminOverrides.hosts]);
+  // Listen for real-time updates from AdminPanel
+  useEffect(() => {
+    const unsubscribe = subscribeToOverrides(next => {
+      setOverrides({ ...(next || {}) });
+    });
+    return unsubscribe;
+  }, []);
+
+  const mergedHosts = useMemo(
+    () => mergeHostsWithOverrides(BASE_HOSTS, overrides.hosts),
+    [overrides.hosts]
+  );
 
   useEffect(() => {
-    const id = setInterval(() => setNowMin(nowMinutesInTZ(TIMEZONE)), WIDGET.updateIntervalMs || 30000);
+    const id = setInterval(
+      () => setNowMin(nowMinutesInTZ(TIMEZONE)),
+      WIDGET.updateIntervalMs || 30000
+    );
     return () => clearInterval(id);
   }, []);
 
   useEffect(() => {
     const matches = [];
     for (const host of mergedHosts) {
-      // If admin forced live, treat as live regardless of schedule
       if (host.forceLive) {
         matches.push(host.id);
         continue;
@@ -56,50 +64,65 @@ export default function ScheduleWidget() {
     setLiveIds(matches);
   }, [nowMin, mergedHosts]);
 
-  // Ensure rows render in this specific order: day, zippo, night
   const orderedRowKeys = ['day', 'zippo', 'night'];
-  const rows = orderedRowKeys.map(key => ({
-    key,
-    hosts: mergedHosts.filter(h => h.row === key)
-  })).filter(r => r.hosts.length > 0);
+  const rows = orderedRowKeys
+    .map(key => ({
+      key,
+      hosts: mergedHosts.filter(h => h.row === key)
+    }))
+    .filter(r => r.hosts.length > 0);
 
-  // background opacity from admin overrides or widget defaults
-  const bgOpacity = (adminOverrides.globals && typeof adminOverrides.globals.backgroundOpacity === 'number')
-    ? adminOverrides.globals.backgroundOpacity
-    : (WIDGET.backgroundOpacity ?? 1);
+  const bgOpacity =
+    overrides.globals?.backgroundOpacity ??
+    WIDGET.backgroundOpacity ??
+    1;
 
-  // parallax intensity
-  const parallax = (adminOverrides.globals && typeof adminOverrides.globals.parallaxIntensity === 'number')
-    ? adminOverrides.globals.parallaxIntensity
-    : (WIDGET.parallaxIntensity ?? 0.08);
+  const parallax =
+    overrides.globals?.parallaxIntensity ??
+    WIDGET.parallaxIntensity ??
+    0.08;
+
+  const tileSize =
+    overrides.globals?.tileSize ??
+    WIDGET.tileSizePx ??
+    200;
+
+  const tileGap =
+    overrides.globals?.tileGap ??
+    WIDGET.tileGapPx ??
+    12;
+
+  const flameSettings =
+    overrides.globals?.flameSettings || {};
 
   return (
     <div
       className="schedule-root"
       style={{
-        '--tile-size': `${WIDGET.tileSizePx}px`,
-        '--tile-gap': `${WIDGET.tileGapPx}px`,
+        '--tile-size': `${tileSize}px`,
+        '--tile-gap': `${tileGap}px`,
+        '--bg-opacity': bgOpacity,
+        '--parallax-intensity': parallax,
         backgroundImage: `url(${BACKGROUND_IMAGE})`,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        // apply background opacity via overlay color using CSS variable
-        '--bg-opacity': bgOpacity,
-        '--parallax-intensity': parallax
+        backgroundSize: 'cover'
       }}
     >
       {rows.map(row => (
         <div className="row" key={row.key} role="list" aria-label={row.key}>
           {row.hosts.map(host => {
             const isLive = liveIds.includes(host.id);
-            // showVideo = isLive (all live spaces get flame)
-            const showVideo = isLive;
+            const settings = host.flameType
+              ? flameSettings[host.flameType] || {}
+              : {};
             return (
               <Tile
                 key={host.id}
                 host={host}
                 isLive={isLive}
-                showVideo={showVideo}
+                showVideo={isLive}
+                flameSettings={settings}
                 onClick={() => setModalHost(host)}
               />
             );
@@ -108,7 +131,14 @@ export default function ScheduleWidget() {
       ))}
 
       {modalHost && (
-        <Modal host={modalHost} onClose={() => setModalHost(null)} />
+        <Modal
+          host={modalHost}
+          isLive={liveIds.includes(modalHost.id)}
+          flameSettings={
+            modalHost.flameType ? flameSettings[modalHost.flameType] || {} : {}
+          }
+          onClose={() => setModalHost(null)}
+        />
       )}
     </div>
   );

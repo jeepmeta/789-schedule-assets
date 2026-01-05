@@ -1,0 +1,418 @@
+/* src/components/AdminPanel.css */
+
+/* Theme variables */
+:root[data-theme="dark"] {
+  --admin-bg: #050505;
+  --admin-border: rgba(255, 255, 255, 0.08);
+  --admin-card-bg: rgba(255, 255, 255, 0.02);
+  --admin-card-border: rgba(255, 255, 255, 0.08);
+  --admin-text: #ffd966;
+  --admin-muted: #b3a56c;
+  --admin-input-bg: rgba(0, 0, 0, 0.6);
+  --admin-input-border: rgba(255, 255, 255, 0.1);
+  --admin-header-gradient: linear-gradient(to bottom, rgba(5, 5, 5, 0.98), rgba(5, 5, 5, 0.9) 70%, rgba(5, 5, 5, 0));
+}
+
+:root[data-theme="light"] {
+  --admin-bg: #fdfaf3;
+  --admin-border: rgba(0, 0, 0, 0.08);
+  --admin-card-bg: rgba(255, 255, 255, 0.9);
+  --admin-card-border: rgba(0, 0, 0, 0.08);
+  --admin-text: #5a4100;
+  --admin-muted: #8c7b3c;
+  --admin-input-bg: rgba(255, 255, 255, 0.9);
+  --admin-input-border: rgba(0, 0, 0, 0.15);
+  --admin-header-gradient: linear-gradient(to bottom, rgba(253, 250, 243, 0.98), rgba(253, 250, 243, 0.9) 70%, rgba(253, 250, 243, 0));
+}
+
+/* Layout shell so the panel can sit beside the widget */
+.admin-panel-shell {
+  position: relative;
+  width: 420px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollable panel */
+.admin-panel {
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  padding: 12px 12px 64px;
+  box-sizing: border-box;
+  border-right: 1px solid var(--admin-border);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Header */
+.admin-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 8px 4px 10px;
+  background: var(--admin-header-gradient);
+  backdrop-filter: blur(4px);
+}
+
+.admin-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.admin-title {
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--admin-text);
+  margin-bottom: 2px;
+}
+
+.admin-subtitle {
+  font-size: 11px;
+  color: var(--admin-muted);
+  margin-top: 2px;
+}
+
+.admin-header-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.admin-search-input {
+  flex: 1;
+  min-width: 0;
+  background: var(--admin-input-bg);
+  border-radius: 4px;
+  border: 1px solid var(--admin-input-border);
+  color: inherit;
+  font-size: 12px;
+  padding: 4px 6px;
+  box-sizing: border-box;
+}
+
+.admin-search-input::placeholder {
+  color: var(--admin-muted);
+}
+
+.admin-search-input:focus {
+  outline: none;
+  border-color: rgba(255, 217, 102, 0.8);
+  box-shadow: 0 0 0 1px rgba(255, 217, 102, 0.4);
+}
+
+/* Theme toggle */
+.admin-theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.admin-theme-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--admin-muted);
+}
+
+/* Header actions */
+.admin-header-actions {
+  display: flex;
+  gap: 4px;
+}
+
+/* Sections */
+.admin-section {
+  margin-top: 8px;
+}
+
+.admin-section-header-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-section-header {
+  flex: 1;
+  padding: 6px 8px;
+  background: rgba(255, 217, 102, 0.08);
+  border: 1px solid rgba(255, 217, 102, 0.25);
+  border-radius: 6px;
+  color: var(--admin-text);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  position: sticky;
+  top: 64px;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.admin-section--bottom .admin-section-header {
+  margin-bottom: 8px;
+}
+
+.admin-section-header:hover {
+  background: rgba(255, 217, 102, 0.16);
+}
+
+.admin-section-toggle {
+  font-size: 14px;
+  padding-left: 6px;
+}
+
+.admin-section-body {
+  padding: 6px 2px 4px;
+}
+
+/* Cards */
+.admin-card {
+  background: var(--admin-card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--admin-card-border);
+  padding: 8px 8px 6px;
+  margin-top: 6px;
+}
+
+.admin-card--inline {
+  margin-top: 10px;
+}
+
+.admin-card-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--admin-text);
+  margin-bottom: 4px;
+}
+
+/* Controls */
+.admin-control-row {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.admin-control-label {
+  flex: 0 0 110px;
+  font-size: 11px;
+  color: var(--admin-muted);
+}
+
+.admin-control-field {
+  flex: 1;
+}
+
+.admin-input {
+  width: 100%;
+  background: var(--admin-input-bg);
+  border-radius: 4px;
+  border: 1px solid var(--admin-input-border);
+  color: inherit;
+  font-size: 12px;
+  padding: 4px 6px;
+  box-sizing: border-box;
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: rgba(255, 217, 102, 0.8);
+  box-shadow: 0 0 0 1px rgba(255, 217, 102, 0.4);
+}
+
+/* Range sliders inherit browser styling; just full width */
+.admin-control-field input[type="range"] {
+  width: 100%;
+}
+
+/* Toggle */
+.admin-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: inherit;
+}
+
+.admin-toggle input[type="checkbox"] {
+  accent-color: #ffd966;
+}
+
+.admin-toggle-label {
+  user-select: none;
+}
+
+/* IO row */
+.admin-io-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.admin-file-label {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 8px;
+  font-size: 11px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  cursor: pointer;
+}
+
+:root[data-theme="light"] .admin-file-label {
+  border-color: rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.admin-file-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Empty state */
+.admin-empty {
+  font-size: 11px;
+  color: var(--admin-muted);
+  padding: 6px 2px;
+}
+
+/* Buttons */
+.admin-btn {
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.02);
+  color: inherit;
+  cursor: pointer;
+}
+
+:root[data-theme="light"] .admin-btn {
+  border-color: rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.admin-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme="light"] .admin-btn:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.admin-btn--primary {
+  border-color: rgba(255, 217, 102, 0.8);
+  background: linear-gradient(135deg, #ffd966, #ffb347);
+  color: #201400;
+}
+
+.admin-btn--primary:hover {
+  filter: brightness(1.05);
+}
+
+.admin-btn--danger {
+  border-color: rgba(255, 120, 120, 0.8);
+  color: #ffdede;
+  background: rgba(255, 120, 120, 0.08);
+}
+
+.admin-btn--danger:hover {
+  background: rgba(255, 120, 120, 0.18);
+}
+
+.admin-btn--sm {
+  padding: 4px 8px;
+  font-size: 10px;
+}
+
+.admin-btn--xs {
+  padding: 3px 6px;
+  font-size: 10px;
+}
+
+/* Footer fixed at bottom of panel */
+.admin-footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: 8px;
+  padding: 6px 6px 8px;
+  background: linear-gradient(to top, rgba(5, 5, 5, 0.96), rgba(5, 5, 5, 0.92), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  z-index: 30;
+}
+
+:root[data-theme="light"] .admin-footer {
+  background: linear-gradient(to top, rgba(253, 250, 243, 0.98), rgba(253, 250, 243, 0.94), transparent);
+}
+
+.admin-footer-left {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.admin-status-label {
+  font-size: 11px;
+  color: var(--admin-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.admin-status-text {
+  font-size: 11px;
+  color: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-footer-right {
+  flex: 0 0 auto;
+}
+
+/* Small screens: panel becomes full width */
+@media (max-width: 768px) {
+  .admin-panel-shell {
+    width: 100%;
+    height: auto;
+  }
+
+  .admin-panel {
+    height: auto;
+    max-height: 100vh;
+  }
+
+  .admin-section-header {
+    top: 72px;
+  }
+}
