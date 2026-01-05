@@ -1,8 +1,16 @@
+// src/components/Tile.jsx
 import React, { useRef, useEffect, useState } from 'react';
 import LiveEffect from './LiveEffect';
 import { WIDGET, FLAMES } from '../config';
 
-export default function Tile({ host, isLive, onClick }) {
+/**
+ * Tile
+ * - Shows zippoClosed / zippoOpen for zippo hosts depending on isLive.
+ * - Mounts LiveEffect video when showVideo is true.
+ * - Reads per-host flamePlacement if present; otherwise LiveEffect will use global flame settings.
+ */
+
+export default function Tile({ host, isLive, showVideo, onClick }) {
   const imgRef = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -21,31 +29,46 @@ export default function Tile({ host, isLive, onClick }) {
     return () => io.disconnect();
   }, []);
 
-  const flameSrc = host.liveEffect?.videoSource || FLAMES[host.type]?.primary;
+  const imageSrc = (() => {
+    if (host.type === 'zippo') {
+      if (isLive && host.zippoOpen) return host.zippoOpen;
+      if (!isLive && host.zippoClosed) return host.zippoClosed;
+      return host.image;
+    }
+    return host.image;
+  })();
+
+  // flame video source: per-host override or FLAMES[type].primary
+  const flameSrc = (host.liveEffect && host.liveEffect.videoSource) || (FLAMES[host.type] && FLAMES[host.type].primary);
 
   return (
     <div
-      className={`tile ${isLive ? 'live' : ''}`}
+      className={`tile ${isLive ? 'live' : ''} ${host.type === 'zippo' ? 'zippo-tile' : ''}`}
       role="button"
       tabIndex={0}
       onClick={onClick}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
       aria-pressed={isLive}
       aria-label={`${host.name} ${isLive ? 'live' : ''}`}
-      style={{ '--flame-x': host.flamePlacement?.x || WIDGET.flamePlacement.x, '--flame-y': host.flamePlacement?.y || WIDGET.flamePlacement.y }}
+      style={{
+        // expose per-host flame placement as CSS variables for fine tuning (if present)
+        '--flame-x': host.flamePlacement?.x || undefined,
+        '--flame-y': host.flamePlacement?.y || undefined,
+        '--flame-scale': host.flamePlacement?.scale ?? undefined
+      }}
     >
-      {isLive && WIDGET.liveEffect.videoEnabled && flameSrc && (
+      {isLive && showVideo && WIDGET.liveEffect.videoEnabled && flameSrc && (
         <LiveEffect
           videoSrc={flameSrc}
-          placement={host.flamePlacement || WIDGET.flamePlacement}
-          styleOverrides={host.liveEffect || WIDGET.liveEffect}
+          placement={host.flamePlacement || undefined}
+          styleOverrides={host.liveEffect || undefined}
         />
       )}
 
       <div className="tile-image" ref={imgRef}>
         {visible ? (
           <img
-            src={host.image}
+            src={imageSrc}
             alt={host.name}
             loading="lazy"
             draggable="false"
@@ -58,6 +81,7 @@ export default function Tile({ host, isLive, onClick }) {
 
       <div className="tile-overlay" aria-hidden="true">
         {isLive && <div className="live-badge">LIVE</div>}
+        {isLive && !showVideo && <div className="live-glow" aria-hidden="true" />}
       </div>
     </div>
   );

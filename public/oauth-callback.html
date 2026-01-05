@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>OAuth Callback</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>body{font-family:system-ui,Arial;background:#0b0b0b;color:#ffd400;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}</style>
+  </head>
+  <body>
+    <div id="status">Completing authorization…</div>
+    <script>
+      (async function () {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const code = params.get('code');
+          const state = params.get('state');
+          if (!code || !state) {
+            document.getElementById('status').textContent = 'Missing code or state in callback.';
+            return;
+          }
+          const key = 'studio_payload_' + state;
+          const payloadStr = sessionStorage.getItem(key);
+          if (!payloadStr) {
+            document.getElementById('status').textContent = 'No payload found for this session. Please retry from the Studio.';
+            return;
+          }
+          const payload = JSON.parse(payloadStr);
+          // send to backend to exchange code and commit
+          const BACKEND = window.__STUDIO_BACKEND_URL || 'http://localhost:4000';
+          const filename = payload.filename || 'src/config.json';
+          const content = JSON.stringify({ hosts: payload.hosts, globals: payload.globals, widget: payload.widget }, null, 2);
+          const commitMessage = payload.commitMessage || 'Update studio overrides via Studio';
+          const resp = await fetch(BACKEND + '/api/save-config', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code, filename, content, commitMessage })
+          });
+          const json = await resp.json();
+          if (!resp.ok) {
+            document.getElementById('status').textContent = 'Save failed: ' + (json.error || JSON.stringify(json));
+            return;
+          }
+          document.getElementById('status').textContent = 'Saved to GitHub successfully. You can close this window.';
+          // cleanup
+          sessionStorage.removeItem(key);
+        } catch (err) {
+          document.getElementById('status').textContent = 'Error: ' + err.message;
+        }
+      })();
+    </script>
+  </body>
+</html>
