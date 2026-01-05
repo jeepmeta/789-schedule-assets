@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/789-schedule-assets/static/css/main.d7943410.css",
+    "main.js": "/789-schedule-assets/static/js/main.855b883d.js",
+    "index.html": "/789-schedule-assets/index.html",
+    "main.d7943410.css.map": "/789-schedule-assets/static/css/main.d7943410.css.map",
+    "main.855b883d.js.map": "/789-schedule-assets/static/js/main.855b883d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d7943410.css",
+    "static/js/main.855b883d.js"
+  ]
+}
