@@ -172,7 +172,7 @@ export default function AdminPanel() {
      the code + payload to your backend.
   -----------------------------------------------------------------*/
   const BACKEND_URL = window.__ADMIN_OVERRIDES?.backendUrl || 'http://localhost:4000';
-  const GITHUB_OAUTH_CLIENT_ID = window.__ADMIN_OVERRIDES?.githubClientId || '<YOUR_GITHUB_OAUTH_CLIENT_ID>';
+  const GITHUB_OAUTH_CLIENT_ID = window.__ADMIN_OVERRIDES?.githubClientId || 'Ov23linsfojqP0SM2qM0';
   const OAUTH_REDIRECT_URI = window.__ADMIN_OVERRIDES?.oauthRedirect || `${window.location.origin}/oauth-callback.html`;
 
   function startOAuthAndSave(payload) {
